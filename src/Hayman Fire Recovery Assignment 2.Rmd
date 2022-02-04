@@ -1,7 +1,7 @@
 ---
 title: "Hayman Fire Recovery"
-author: "Matthew Ross"
-date: "10/3/2019"
+author: "Laney Gordon"
+date: "`r format(Sys.Date(), '%B %d, %Y')`" 
 output: html_document
 ---
 
@@ -57,7 +57,22 @@ function "spread" and then make a plot that shows the correlation s a
 function of if the site was burned or not (x axis should be ndmi)
 You should exclude winter months and focus on summer months
 
+```{r}
 
+full_wide <- spread(data=full_long,key='data',value='value') %>%
+  filter_if(is.numeric,all_vars(!is.na(.))) %>%
+  mutate(month = month(DateTime),
+         year = year(DateTime))
+
+summer_only <- filter(full_wide,month %in% c(6,7,8,9))
+
+ggplot(summer_only,aes(x=ndmi,y=ndvi,color=site)) + 
+  geom_point() + 
+  theme_few() + 
+  scale_color_few() + 
+  theme(legend.position=c(0.8,0.8))
+
+```
 
 ## Question 2 
 
