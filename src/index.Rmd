@@ -65,7 +65,7 @@ function "spread" and then make a plot that shows the correlation s a
 function of if the site was burned or not (x axis should be ndmi)
 You should exclude winter months and focus on summer months
 
-```{r}
+```{r dataread, warning=F,message=F}
 
 full_wide <- spread(data=full_long,key='data',value='value') %>%
   filter_if(is.numeric,all_vars(!is.na(.))) %>%
@@ -74,6 +74,7 @@ full_wide <- spread(data=full_long,key='data',value='value') %>%
 
 summer_only <- filter(full_wide,month %in% c(6,7,8,9))
 
+#plot
 ggplot(summer_only,aes(x=ndmi,y=ndvi,color=site)) + 
   geom_point() + 
   theme_few() + 
@@ -94,7 +95,7 @@ In other words, does the previous year's snow cover influence vegetation
  growth for the following summer?
 
 
-```{r, warning=F, message=F} 
+```{r dataread, warning=F, message=F} 
 
 ndvi_annual <- full_wide[c(1,2,5,6,7)] %>% 
   filter(month %in% c(6,7,8)) %>%
@@ -118,7 +119,7 @@ The correlation coefficient for this data is 0.18, which is close to 0, telling 
 How is the snow effect from question 2 different between pre- and post-burn
 and burned and unburned? 
 
-```{r, warning =F, message=F}
+```{r dataread, warning =F, message=F}
 ## Pre- and Post- burn
 preburn<- c(1984:2001)
 postburn <- (2003:2019)
@@ -247,7 +248,8 @@ It appears that the correlation for postburn is around 0.24 and the correlation 
 
 What month is the greenest month on average? 
 
-```{r}
+```{r dataread, warning=F,message=F}
+
 ndvi_avg_month<- full_wide[c("ndvi", "month")] %>% 
   group_by(month) %>%
   summarize(ndvi_avg_month=mean(ndvi))%>% 
@@ -263,7 +265,7 @@ It appears that the month with the highest vegetation (ndvi) on average occurs i
 
 What month is the snowiest on average?
 
-```{r}
+```{r dataread, warning=F,message=F}
 ndsi_avg_month<- full_wide[c("ndsi", "month")] %>% 
   group_by(month) %>%
   summarize(ndsi_avg_month=mean(ndsi))%>% 
