@@ -236,14 +236,31 @@ It appears that the correlation for postburn is around 0.24 and the correlation 
 
 What month is the greenest month on average? 
 
-The greenest month on average appears to be 
+```{r}
+ndvi_avg_month<- full_wide[c("ndvi", "month")] %>% 
+  group_by(month) %>%
+  summarize(ndvi_avg_month=mean(ndvi))%>% 
+filter(ndvi_avg_month== max(ndvi_avg_month))
 
+ndvi_avg_month
+```
+
+It appears that the month with the highest vegetation (ndvi) on average occurs in month 8, which is August. 
 
 
 ## Question 5) 
 
 What month is the snowiest on average?
 
+```{r}
+ndsi_avg_month<- full_wide[c("ndsi", "month")] %>% 
+  group_by(month) %>%
+  summarize(ndsi_avg_month=mean(ndsi))%>% 
+filter(ndsi_avg_month== max(ndsi_avg_month))
+
+ndsi_avg_month
+```
+The month with the highest amount of snow (ndsi) on average occurs in month 1, which is January. 
 
 ## Bonus Question: Redo all problems with `spread` and `gather` using modern tidyverse syntax. 
 
