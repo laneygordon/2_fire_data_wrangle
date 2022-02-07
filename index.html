@@ -215,6 +215,7 @@ full_long &lt;- rbind(ndvi,ndmi,ndsi) %&gt;%
 
 summer_only &lt;- filter(full_wide,month %in% c(6,7,8,9))
 
+#plot
 ggplot(summer_only,aes(x=ndmi,y=ndvi,color=site)) + 
   geom_point() + 
   theme_few() + 
